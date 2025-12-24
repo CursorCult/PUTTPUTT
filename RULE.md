@@ -1,19 +1,64 @@
 ---
-description: "Enforce total test coverage through public-only tests"
+description: "Enforce total test coverage through public APIs; optional targeted testing for privates."
 alwaysApply: true
 ---
 
-# PUTT PUTT Rule (PUBLICS UNDER TOTAL TESTING)
+# PUTT PUTT Rule
 
-The PUTT PUTT Rule mandates that the entire codebase achieves **100% test coverage**. However, tests may only use public functions, classes, or modules.
+**Publics Under Thorough Testing, Privates Under Targeted Testing**
 
-If it’s exposed, it’s fully exercised—no exceptions, no partial paths, no uncovered lines.
+## Core invariants
 
-We say PUTT PUTT twice because the requirement is non‑negotiable: total coverage, through public APIs, every time.
+### 1. **Publics Under Thorough Testing**
 
-## Notes
+* **Requirement:** 100% line, branch, and error-path coverage
+* **Mechanism:** **Global tests only**
+* **Access constraint:** Tests may invoke **only public APIs**
+* **Implication:**
+  All private code **must be exercised implicitly** through public execution paths.
+* **Invariant:** If a private path cannot be reached through public APIs, the design is suspect.
 
-- This rule is language agnostic.
-- “Public” means any API surface that consumers can call/import/use outside its defining module or package.
-- Coverage must include all branches and error paths across the whole codebase.
-- Tests should not reference private/internal code directly or use it outside its enclosing unit. Internal paths are covered indirectly through tests of the public surface.
+---
+
+### 2. **Privates Under Targeted Testing**
+
+* **Permission, not requirement:** Targeted tests **may** exist for private code
+* **Scope:** **Local tests only** (same module or package)
+* **Purpose constraint:**
+
+  * Regression localization
+  * Fast failure isolation
+  * Algorithmic edge cases that are slow or opaque to reach via public flows
+* **Non-authoritative:**
+  Private tests **do not count** toward global coverage requirements.
+* **Invariant:**
+  Targeted tests assist diagnosis; they do **not** justify uncovered public paths.
+
+---
+
+## Coverage dominance rule
+
+| Code path           | Must be covered by               | May also be covered by        |
+| ------------------- | -------------------------------- | ----------------------------- |
+| Public code         | Global tests via public APIs     | Local tests                   |
+| Private code        | **Global tests via public APIs** | Local targeted tests          |
+| Branch / error path | Global tests                     | Local tests (diagnostic only) |
+
+**Key rule:**
+
+> If a private path is only covered by local tests and not by global public execution, the PUTT PUTT rule is violated.
+
+---
+
+## Anti-patterns (explicitly forbidden)
+
+* ❌ Using private tests to justify missing public coverage
+* ❌ Treating private helpers as stable APIs
+* ❌ Designing private code paths unreachable from any public API
+* ❌ Global tests importing or mocking private symbols
+
+---
+
+## Final one-line definition
+
+> **PUTT PUTT:** All code is thoroughly covered through public APIs; private code may additionally receive targeted local tests for diagnostic precision, but never as a substitute for public execution coverage.
