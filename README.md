@@ -1,6 +1,6 @@
 # PUTTPUTT
 
-The PUTT PUTT Rule: **PUBLICS UNDER TOTAL TESTING**.
+**Publics Under Thorough Testing, Privates Under Targeted Testing**
 
 **Install**
 
@@ -13,15 +13,15 @@ Rule file format reference: https://cursor.com/docs/context/rules#rulemd-file-fo
 
 **When to use**
 
-- You want high confidence in all exposed APIs.
-- You ship libraries or stable internal interfaces relied on by others.
-- You’re tightening quality gates in a mature or safety‑critical codebase.
+- You want ironclad confidence in your public API contract.
+- You need to refactor internals safely without rewriting brittle tests.
+- You want the speed of unit tests for debugging, but the realism of integration tests for coverage.
 
 **What it enforces**
 
-- The entire codebase reaches 100% test coverage.
-- Tests only call public entities; private/internal code is exercised indirectly.
-- Public surfaces are treated as non‑negotiable quality boundaries.
+- **Publics Under Thorough Testing**: 100% coverage must be achieved solely through public APIs. Private code is exercised implicitly.
+- **Privates Under Targeted Testing**: You *may* write targeted local tests for private logic (for speed/debugging), but they do **not** count toward the 100% coverage goal.
+- **Strict Dominance**: If a private path is covered *only* by a private test, the code is considered uncovered/broken.
 
 **Credits**
 
