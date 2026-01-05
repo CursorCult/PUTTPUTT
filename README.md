@@ -25,6 +25,14 @@ Rule file format reference: https://cursor.com/docs/context/rules#rulemd-file-fo
 - **Privates Under Targeted Testing**: You *may* write targeted local tests for private logic (for speed/debugging), but they do **not** count toward the 100% coverage goal.
 - **Strict Dominance**: If a private path is covered *only* by local tests and not by public execution, the code is considered uncovered/broken.
 
+**Merged guidance: DesignToTest**
+
+Design interfaces for rapid, isolated testing.
+
+- Expose small, explicit interfaces so core logic is reachable without heavy setup.
+- Avoid monoliths that require large fixtures or environment scaffolding.
+- Promote internal "engine/kernel" logic to public or protected when it materially improves testability.
+
 **Credits**
 
 - Developed by Will Wieselquist. Anyone can use it.

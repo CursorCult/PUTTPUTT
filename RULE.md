@@ -50,6 +50,18 @@ alwaysApply: true
 
 ---
 
+## DesignToTest guidance (merged)
+
+Design interfaces so correctness can be tested quickly, locally, and with minimal setup.
+
+- Every non-trivial behavior should be reachable through a small, explicit interface.
+- Avoid monolithic functions or classes that require heavy environment setup to test.
+- Extract "engine/kernel" logic into deterministic units with clear inputs and outputs.
+- It is acceptable to make core operations public or protected to enable direct, high-signal tests.
+- Refactor toward these properties before adding brittle, high-setup tests.
+
+---
+
 ## Anti-patterns (explicitly forbidden)
 
 * ❌ Using private tests to justify missing public coverage
