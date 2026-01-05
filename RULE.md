@@ -52,7 +52,7 @@ alwaysApply: true
 
 ## DesignToTest guidance (merged)
 
-Design interfaces so correctness can be tested quickly, locally, and with minimal setup.
+Design interfaces so correctness can be tested quickly, locally, and with minimal setup. Always design for testability.
 
 - Every non-trivial behavior should be reachable through a small, explicit interface.
 - Avoid monolithic functions or classes that require heavy environment setup to test.

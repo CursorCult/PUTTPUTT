@@ -27,7 +27,7 @@ Rule file format reference: https://cursor.com/docs/context/rules#rulemd-file-fo
 
 **Merged guidance: DesignToTest**
 
-Design interfaces for rapid, isolated testing.
+Design interfaces for rapid, isolated testing. Always design for testability.
 
 - Expose small, explicit interfaces so core logic is reachable without heavy setup.
 - Avoid monoliths that require large fixtures or environment scaffolding.
